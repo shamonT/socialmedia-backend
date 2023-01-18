@@ -1,5 +1,5 @@
-// Module.exports={
-//     resolve:{
-//         fallback:{process:require.resolve('process/browser')}
-//     }
-// }
+Module.exports={
+    resolve:{
+        fallback:{process:require.resolve('process/browser')}
+    }
+}
