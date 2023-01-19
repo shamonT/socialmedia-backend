@@ -89,6 +89,7 @@ io.on("connection", (socket) => {
       }
   });
 })
+app.options("*",cors())
 app.use(cors());
 app.use(express.json());
 app.use(helmet());
