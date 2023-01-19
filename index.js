@@ -29,6 +29,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
+app.use(cors());
+// app.options("*",cors())
 const httpServer = createServer(app);
 import { createServer } from "http";
 import { Server } from "socket.io";
@@ -89,31 +91,44 @@ io.on("connection", (socket) => {
       }
   });
 })
-app.options("*",cors())
-app.use(cors());
+
+
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(express.static("public"));
+// app.use(express.static("public"));
 // app.use("/images", express.static("./public/assets"));
-app.use(
-  "/assets",
-  express.static(path.join(__dirname, "public/assets"))
-);
+// app.use(
+//   "/assets",
+//   express.static(path.join(__dirname, "public/assets"))
+// );
 
-// filestorage//
+// // filestorage//
 
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "./public/assets");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname);
+//   },
+// });
+
+app.use('/assets', express.static(path.join(__dirname, './public/assets')));
+
+//FILE STORAGE
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./public/assets");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
+    destination: function (req, file, cb) {
+        cb(null, "./public/assets")
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+})
+
 const upload = multer({
   storage: storage,
   fileFilter: (req, file, cb) => {
