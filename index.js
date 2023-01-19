@@ -35,15 +35,13 @@ import { Server } from "socket.io";
 import { register, sendOtp } from "./controller/auth.js";
 
 
-const io = new Server(httpServer,{
+const io = new Server(httpServer, {
   cors: {
-      origin: [
-        // "https://ed.ednox.shop:3000"
-      , "http://localhost:3000",
-      // "https://ed.ednox.shop"
-    ],
+      origin: ["https://socialpedia.fashionnova.store:3000", "http://localhost:3000", "https://socialpedia.fashionnova.store"],
   },
 })
+
+
 
 
 
@@ -146,7 +144,7 @@ app.use(function (err, req, res, next) {
   });
 });
 
-const PORT = process.env.port || 6001;
+const PORT = process.env.PORT || 6001;
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
