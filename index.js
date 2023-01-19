@@ -35,13 +35,23 @@ import { Server } from "socket.io";
 import { register, sendOtp } from "./controller/auth.js";
 
 
-const io = new Server(httpServer, {
+// const io = new Server(httpServer, {
+//     cors: {
+//         origin: ["https://ed.ednox.shop:3000", "http://localhost:3000", "https://ed.ednox.shop"],
+//     },
+// })
+
+
+const io = new Server(httpServer,{
   cors: {
-      origin: ["https://socialpedia.fashionnova.store:3000", "http://localhost:3000", "https://socialpedia.fashionnova.store"],
+      origin: [
+        // "https://ed.ednox.shop:3000"
+      , "https://socialpedia.fashionnova.store",
+      "http://localhost:3000"
+      // "https://ed.ednox.shop"
+    ],
   },
 })
-
-
 
 
 
@@ -88,14 +98,14 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(
   "/assets",
-  express.static(path.join(__dirname, "public/assets"))
+  express.static(path.join(__dirname, "../client/public/assets"))
 );
 
 // filestorage//
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/assets");
+    cb(null, "../client/public/assets");
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
